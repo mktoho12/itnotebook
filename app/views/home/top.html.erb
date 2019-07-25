@@ -3,9 +3,14 @@
   <% @posts.each do |post| %>
     <table border="1" class="blogtable">
         <tr>
-            <td class="blogcontent">
-                <%= simple_format(post.content) %>
-            </td>
+            <th>
+              <%= post.title || 'タイトルなし' %>
+            </th>
+        </tr>
+        <tr>
+          <%= tag.td simple_format(post.content),
+                class: 'blogcontent',
+                style: post_bg_image(post) %>
         </tr>
         <tr>
             <td class="blogdate" align="right">

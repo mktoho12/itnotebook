@@ -1,3 +1,3 @@
 class Post < ApplicationRecord
-  has_one_attached :image_name
+  has_one_attached :image
 end
