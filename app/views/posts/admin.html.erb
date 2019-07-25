@@ -17,7 +17,7 @@
     <td style="text-align:right"><%= post.id %></td>
     <td><%= link_to post.title || '【タイトルなし】', post_path(post) %></td>
     <td><%= post.content&.truncate(15) %></td>
-    <td><%= render 'image', post: post, options: { size: '50x50' } %></td>
+    <td><%= render 'image', post: post, size: '50x50' %></td>
     <td><small><em><%= post.created_at.strftime '%Y/%m/%d %H:%M' %></em></small></td>
     <td><small><em><%= post.updated_at.strftime '%Y/%m/%d %H:%M' %></em></small></td>
     <td><%= link_to '編集', edit_post_path(post) %></td>
