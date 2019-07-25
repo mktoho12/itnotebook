@@ -1,0 +1,13 @@
+<h1>投稿の一覧</h1>
+<% @posts.each do |post| %>
+  <p>
+    <div>
+      <%= link_to post.title || 'タイトルなし', post %>
+      <%= post.content&.truncate 15 %>
+      <%= render 'image_name', post: post, options: { size: '100x100'} %>
+    </div>
+    <div>
+      <small><em><%= post.created_at.strftime '%Y/%m/%d %H:%M' %></em></small>
+    </div>
+  </p>
+<% end %>

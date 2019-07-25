@@ -3,16 +3,42 @@ class PostsController < ApplicationController
   protect_from_forgery except: :create # createアクションを除外
   before_action :authenticate_user
 
-  def new
+  def index
+    @posts = Post.all.order created_at: :desc
   end
-  def image
 
-  end
   def create
-    @post = Post.new(content: params[:content])
-    @post.save
-    redirect_to("/")
+    post = Post.create! params.require(:post).permit(:title, :content, :image_name)
+    redirect_to post
   end
+
+  def new
+    @post = Post.new
+  end
+
+  def edit
+    @post = Post.find params[:id]
+  end
+
+  def show
+    @post = Post.find params[:id]
+  end
+
+  def update
+    post = Post.find params[:id]
+    post.update! params.require(:post).permit(:title, :content, :image_name)
+    redirect_to post
+  end
+
+  def destroy
+    @post = Post.find_by(id: params[:id])
+    @post.destroy
+    redirect_to("/posts/admin")
+  end
+
+  def image
+  end
+
   def image_create
     if params[:image]
       @image = Image.new(image_name: params[:image].original_filename)
@@ -30,26 +56,9 @@ class PostsController < ApplicationController
       redirect_to("/posts/image",flash: {image_tag: @image_tag})
     end
   end
-  def edit
-    @post = Post.find_by(id: params[:id])
-  end
+
   def admin
     @posts = Post.all.order(created_at: :desc)
   end
-  def update
-    @post = Post.find_by(id: params[:id])
-    @post.content = params[:content]
-    if params[:image]
-      @post.image_name = params[:image].original_filename
-      image = params[:image]
-      File.binwrite("public/post_image/#{@post.image_name}",image.read)
-    end
-    @post.save
-    redirect_to("/")
-  end
-  def destroy
-    @post = Post.find_by(id: params[:id])
-    @post.destroy
-    redirect_to("/posts/admin")
-  end
+
 end
