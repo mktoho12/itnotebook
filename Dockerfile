@@ -7,7 +7,8 @@ RUN apt-get update -qq \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && gem update --system \
-  && gem install bundler
+  && gem install bundler \
+  && gem install rails -v 5.2.3
 
 RUN mkdir /app
 WORKDIR /app
@@ -16,5 +17,4 @@ ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock
 RUN bundle
 
-
-CMD bundle exec rails s -b 0.0.0.0
+CMD rails s -b 0.0.0.0
